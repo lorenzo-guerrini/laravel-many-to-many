@@ -67,9 +67,10 @@
 
                             {{-- Altrimenti recupera i tag del post --}}
                             @else
-                            {{ $post->tags->contains($tag) ? 'checked' : '' }}>
+                            {{ $post->tags->contains($tag) ? 'checked' : '' }}
 
                             @endif
+                            >
                             
                             <label for="{{ $tag->slug }}" class="form-check-label">{{ $tag->name }}</label>
                     </div>
