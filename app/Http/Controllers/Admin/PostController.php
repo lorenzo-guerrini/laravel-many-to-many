@@ -16,7 +16,8 @@ class PostController extends Controller
         'title' => 'required|max:255',
         'content' => 'required',
         'category_id' => 'nullable|exists:categories,id',
-        'image' => 'nullable|image|mimes:jpeg,bmp,png|max:2040'
+        'image' => 'nullable|image|mimes:jpeg,bmp,png|max:2040',
+        'tags' => 'exists:tags,id'
     ];
 
     protected function getSlug($title = "", $id = "")
@@ -116,8 +117,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -152,6 +154,10 @@ class PostController extends Controller
         $form_data["slug"] = ($post->title == $form_data['title']) ? $post->slug : $this->getSlug($form_data["title"], $post->id);
 
         $post->update($form_data);
+
+        //Se $form_data['tags'] è settato ne fa il sync, altrimenti lo fa con un array vuoto
+        $post->tags()->sync(isset($form_data['tags']) ? $form_data['tags'] : []);
+
         return redirect()->route('admin.posts.index')->with(['msg' => '<div class="alert alert-success" role="alert">Comic succefully updated</div>']);
     }
 
