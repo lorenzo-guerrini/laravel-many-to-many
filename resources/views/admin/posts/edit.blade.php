@@ -27,6 +27,7 @@
             @csrf
             @method('PUT')
 
+            {{-- Title --}}
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror"
@@ -36,6 +37,7 @@
                 @enderror
             </div>
 
+            {{-- Category --}}
             <div class="form-group">
                 <label for="category">Category</label>
                 <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror">
@@ -51,6 +53,22 @@
                 @enderror
             </div>
 
+            {{-- Tag --}}
+            <div class="form-group">
+                <label for="tag">Tags</label><br>
+                @foreach ($tags as $tag)
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" name="tags[]" id="{{ $tag->slug }}" class="form-check-input"
+                            value="{{ $tag->id }}" {{ $post->tags->contains($tag) ? 'checked' : '' }}>
+                        <label for="{{ $tag->slug }}" class="form-check-label">{{ $tag->name }}</label>
+                    </div>
+                @endforeach
+                @error('tags')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            {{-- Image --}}
             <div class="form-group">
                 <label for="image">Image (jpeg, bmp, png) - max: 2MB</label>
                 <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror">
@@ -59,6 +77,7 @@
                 @enderror
             </div>
 
+            {{-- Content --}}
             <div class="form-group">
                 <label for="content">Content</label>
                 <textarea id="content" name="content" class="form-control @error('content') is-invalid @enderror" rows="10"
@@ -68,6 +87,7 @@
                 @enderror
             </div>
 
+            {{-- Submit --}}
             <button type="submit" class="btn btn-success">Save</button>
         </form>
     </div>
