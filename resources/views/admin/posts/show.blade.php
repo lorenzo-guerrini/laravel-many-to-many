@@ -15,9 +15,16 @@
             <li><strong>Title: </strong>{{ $post->title }}</li>
             <li><strong>Slug: </strong>{{ $post->slug }}</li>
 
-            @if ($post->category)
+            @if (isset($post->category))
                 <li><strong>Category: </strong>{{ $post->category->name }}</li>
             @endif
+
+            <li>
+                <strong>Tags:</strong>
+                @foreach ($post->tags as $tag)
+                    <span style="color: white" class="badge bg-primary primary">{{ $tag->name }}</span>
+                @endforeach
+            </li>
 
             <li><strong>Created at: </strong>{{ $post->created_at }}</li>
             <li><strong>Updated at: </strong>{{ $post->updated_at }}</li>
