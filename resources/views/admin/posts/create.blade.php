@@ -58,6 +58,9 @@
                         <label for="{{ $tag->slug }}" class="form-check-label">{{ $tag->name }}</label>
                     </div>
                 @endforeach
+                @error('tags')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             {{-- Image --}}
