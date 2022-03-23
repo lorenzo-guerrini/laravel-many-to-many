@@ -13,7 +13,8 @@
                 <tr class="text-center">
                     <th>ID</th>
                     <th class="col-3">Title - Slug</th>
-                    <th class="col-2">Category</th>
+                    <th class="col-1">Category</th>
+                    <th class="col-1">Tags</th>
                     <th class="col-1">Image</th>
                     <th class="col-4">Content</th>
                     <th class="text-center col-2">Actions</th>
@@ -35,6 +36,13 @@
                         {{-- Category --}}
                         <td class="text-center">
                             {{ $post->category ? $post->category->name : '/' }}
+                        </td>
+
+                        {{-- Tag --}}
+                        <td class="text-center">
+                            @foreach ($post->tags as $tag)
+                                <span style="color: white" class="badge bg-primary primary">{{ $tag->name }}</span>
+                            @endforeach
                         </td>
 
                         {{-- Image --}}
