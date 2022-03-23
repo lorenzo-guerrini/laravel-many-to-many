@@ -53,9 +53,10 @@
                 <label for="tag">Tags</label><br>
                 @foreach ($tags as $tag)
                     <div class="form-check form-check-inline">
-                        <input type="checkbox" name="tags[]" id="{{ $tag->slug }}" class="form-check-input"
-                            value="{{ $tag->id }}">
-                        <label for="{{ $tag->slug }}" class="form-check-label">{{ $tag->name }}</label>
+                        <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" class="form-check-input"
+                            value="{{ $tag->id }}"
+                            {{ old('tags') && in_array($tag->id, old('tags')) ? 'checked' : '' }}>
+                        <label for="tag{{ $tag->id }}" class="form-check-label">{{ $tag->name }}</label>
                     </div>
                 @endforeach
                 @error('tags')

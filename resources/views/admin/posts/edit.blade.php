@@ -59,8 +59,19 @@
                 @foreach ($tags as $tag)
                     <div class="form-check form-check-inline">
                         <input type="checkbox" name="tags[]" id="{{ $tag->slug }}" class="form-check-input"
-                            value="{{ $tag->id }}" {{ $post->tags->contains($tag) ? 'checked' : '' }}>
-                        <label for="{{ $tag->slug }}" class="form-check-label">{{ $tag->name }}</label>
+                            value="{{ $tag->id }}"
+                            
+                            {{-- Se la validation fallisce recupera i valori old --}}
+                            @if ($errors->any())
+                            {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}
+
+                            {{-- Altrimenti recupera i tag del post --}}
+                            @else
+                            {{ $post->tags->contains($tag) ? 'checked' : '' }}>
+
+                            @endif
+                            
+                            <label for="{{ $tag->slug }}" class="form-check-label">{{ $tag->name }}</label>
                     </div>
                 @endforeach
                 @error('tags')
